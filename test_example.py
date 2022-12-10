@@ -73,3 +73,21 @@ def test_get_second_word_walrus_pylint(text: str, expected_word: str):
     returned_word = get_second_word(text)
 
     assert returned_word == expected_word
+
+
+@pytest.mark.parametrize(
+    "text, expected_word",
+    [
+        pytest.param("", None, id="empty text"),
+        pytest.param("first", None, id="single word"),
+        pytest.param(text := "first second", text.split()[1], id="multiple words"),
+        pytest.param(
+            text := "alpha beta", text.split()[1], id="multiple words alternate"
+        ),
+        pytest.param(text := "first second third", text.split()[1], id="many words"),
+    ],
+)
+def test_get_second_word_walrus_too_far(text: str, expected_word: str):
+    returned_word = get_second_word(text)
+
+    assert returned_word == expected_word
